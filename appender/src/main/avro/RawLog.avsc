@@ -1,0 +1,64 @@
+{
+  "type": "record",
+  "namespace": "com.blacklocus.logback.s3.avro",
+  "name": "RawLog",
+  "doc": "A single log message with original format string and arguments intact.",
+  "fields": [
+    {
+      "name": "loggerName",
+      "type": "string",
+      "doc": "Name of the logger that logged this message."
+    },
+    {
+      "name": "logLevel",
+      "type": "com.blacklocus.logback.s3.avro.LogLevel",
+      "doc": "The log message severity level, one of TRACE, DEBUG, INFO, WARN, ERROR"
+    },
+    {
+      "name": "logDateTime",
+      "type": "string",
+      "doc": "ISO-8601 datetime string when the log message was created."
+    },
+    {
+      "name": "lineNumber",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null,
+      "doc": "If enabled, the line number of the logger invocation. This combined with the logger name can uniquely identify logger invocations under typical logging configurations."
+    },
+    {
+      "name": "rendered",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "The 'rendered' log message as produced by the underlying encoder, should one have bee specified."
+    },
+    {
+      "name": "format",
+      "type": "string",
+      "doc": "The log message's original, raw format string."
+    },
+    {
+      "name": "args",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "doc": "The log message's original formatter arguments as strings."
+    },
+    {
+      "name": "context",
+      "type": {
+        "type": "map",
+        "keys": "string",
+        "values": "string"
+      },
+      "default": {},
+      "doc": "Any MDC values present at the time of the logger invocation. See http://logback.qos.ch/manual/mdc.html"
+    }
+  ]
+}

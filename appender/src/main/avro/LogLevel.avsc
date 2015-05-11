@@ -1,0 +1,12 @@
+{
+  "type": "enum",
+  "namespace": "com.blacklocus.logback.s3.avro",
+  "name": "LogLevel",
+  "symbols": [
+    "TRACE",
+    "DEBUG",
+    "INFO",
+    "WARN",
+    "ERROR"
+  ]
+}
