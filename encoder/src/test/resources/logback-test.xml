@@ -1,0 +1,16 @@
+<configuration>
+
+  <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="com.blacklocus.logback.s3.JsonEncoder">
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+      <lineNumbers>true</lineNumbers>
+      <debug>true</debug>
+    </encoder>
+  </appender>
+
+  <logger name="com.blacklocus.logback.s3.LogTest" level="trace"/>
+
+  <root level="warn">
+    <appender-ref ref="json"/>
+  </root>
+</configuration>

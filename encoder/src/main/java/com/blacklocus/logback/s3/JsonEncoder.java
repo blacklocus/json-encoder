@@ -4,7 +4,9 @@ import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.pattern.LineOfCallerConverter;
 import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.AppenderBase;
+import ch.qos.logback.core.Layout;
+import ch.qos.logback.core.LayoutBase;
+import ch.qos.logback.core.encoder.LayoutWrappingEncoder;
 import com.blacklocus.logback.s3.avro.LogLevel;
 import com.blacklocus.logback.s3.avro.RawLog;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -12,7 +14,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,19 +21,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class JsonAppender<E> extends AppenderBase<E> {
+// We need our own encoder to correctly initialize the layout.
+public class JsonEncoder<E> extends LayoutWrappingEncoder<E> {
 
     private static final String DEBUG_NAME = "[JsonAppender]";
+    private static final String NEW_LINE = System.getProperty("line.separator", "\n");
 
     private ObjectMapper mapper = new ObjectMapper();
     private PatternLayout renderPatternLayout;
 
-    // Configurable things follow
+    // Configurable things
 
     String pattern;
     boolean lineNumbers = false;
     boolean debug = false;
-    PrintStream target = System.out;
 
     public void setPattern(String pattern) {
         this.pattern = pattern;
@@ -46,18 +48,18 @@ public class JsonAppender<E> extends AppenderBase<E> {
         this.debug = debug;
     }
 
-    public void setTarget(String target) {
-        if (target.equalsIgnoreCase("System.out")) {
-            this.target = System.out;
-        } else if (target.equalsIgnoreCase("System.err")) {
-            this.target = System.err;
-        } else {
-            throw new IllegalArgumentException(target);
-        }
-    }
-
     @Override
     public void start() {
+        Layout<E> layout = new LayoutBase<E>() {
+            @Override
+            public String doLayout(E event) {
+                return _doLayout(event);
+            }
+        };
+        layout.setContext(context);
+        layout.start();
+        setLayout(layout);
+
         if (null != pattern) {
             PatternLayout renderPatternLayout = new PatternLayout();
             renderPatternLayout.setContext(context);
@@ -69,8 +71,7 @@ public class JsonAppender<E> extends AppenderBase<E> {
         super.start();
     }
 
-    @Override
-    protected void append(E eventObject) {
+    String _doLayout(E eventObject) {
         try {
 
             if (eventObject instanceof ILoggingEvent) {
@@ -102,13 +103,14 @@ public class JsonAppender<E> extends AppenderBase<E> {
                 }
 
                 RawLog rawLog = builder.build();
-                target.println(rawLog);
+                return rawLog.toString() + NEW_LINE;
             }
 
         } catch (Exception e) {
             debug(e);
         }
 
+        return null; // hmmmmmm
     }
 
     List<CharSequence> stringify(Object[] args) throws IOException {
@@ -138,15 +140,4 @@ public class JsonAppender<E> extends AppenderBase<E> {
             }
         }
     }
-
-    static class EventPair {
-        ILoggingEvent event;
-        RawLog rawLog;
-
-        public EventPair(ILoggingEvent event, RawLog rawLog) {
-            this.event = event;
-            this.rawLog = rawLog;
-        }
-    }
-
 }

@@ -1,2 +1,2 @@
-rootProject.name = 'json-appender'
-include 'appender'
+rootProject.name = 'json-encoder'
+include 'encoder'

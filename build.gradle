@@ -3,8 +3,8 @@
 ext {
     // Project constants
     github_org = 'blacklocus'
-    project_group = 'com.blacklocus'
-    project_name = 'json-appender'
+    project_group = 'com.blacklocus.logback'
+    project_name = 'json-encoder'
     project_version = '0.0.1-SNAPSHOT'
     project_description = 'Log messages output as JSON.'
     project_jdk = '1.7'
