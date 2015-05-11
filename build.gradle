@@ -4,10 +4,10 @@ ext {
     // Project constants
     github_org = 'blacklocus'
     project_group = 'com.blacklocus'
-    project_name = 's3-raw-appender'
+    project_name = 'json-appender'
     project_version = '0.0.1-SNAPSHOT'
-    project_description = 'Appends slf4j log messages to s3 files in batches with format arguments intact.'
-    project_jdk = '1.8'
+    project_description = 'Log messages output as JSON.'
+    project_jdk = '1.7'
 
     /*
      * Dependencies can be named so that sub-projects can reference consistent version of them.
@@ -16,7 +16,6 @@ ext {
      * }
      */
     deps = [
-            guava: 'com.google.guava:guava:18.0',
     ]
 
     /*

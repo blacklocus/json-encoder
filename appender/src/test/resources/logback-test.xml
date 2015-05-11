@@ -1,12 +1,8 @@
 <configuration>
 
-  <shutdownHook/>
-
-  <appender name="s3" class="com.blacklocus.logback.s3.AvroS3Appender">
-    <bucket>bl-log</bucket>
-    <keyPattern>raw/test/%d{yyyy/MM/dd/HH:mm:ss}.json.gz</keyPattern>
-    <renderPattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</renderPattern>
-    <gzip>true</gzip>
+  <appender name="json" class="com.blacklocus.logback.s3.JsonAppender">
+    <target>System.out</target>
+    <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 
     <debug>true</debug>
   </appender>
@@ -14,6 +10,6 @@
   <logger name="com.blacklocus.logback.s3.LogTest" level="trace"/>
 
   <root level="warn">
-    <appender-ref ref="s3"/>
+    <appender-ref ref="json"/>
   </root>
 </configuration>

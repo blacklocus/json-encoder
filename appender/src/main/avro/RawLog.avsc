@@ -46,7 +46,10 @@
       "name": "args",
       "type": {
         "type": "array",
-        "items": "string"
+        "items": [
+          "null",
+          "string"
+        ]
       },
       "doc": "The log message's original formatter arguments as strings."
     },
