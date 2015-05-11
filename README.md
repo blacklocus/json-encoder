@@ -19,7 +19,7 @@ Sample usage with a FileAppender.
 <configuration scan="true" scanPeriod="30 seconds">
 
   <appender name="json" class="ch.qos.logback.core.FileAppender">
-    <file>${APP_ROOT:-/tmp}/${APP_NAME:-blacklocus}.json</file>
+    <file>${BL_JSON_LOG:-/tmp/blacklocus.json}</file>
     <append>true</append>
     
     <!-- This is us right here -->
