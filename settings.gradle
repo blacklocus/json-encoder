@@ -1,2 +1,3 @@
-rootProject.name = 'json-encoder'
-include 'encoder'
+rootProject.name = 'logback'
+
+include 'json-encoder'
