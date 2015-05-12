@@ -40,7 +40,7 @@ Sample usage with a FileAppender.
 </configuration>
 ```
 
-might produce something like (from [LogTest.java]())
+might produce something like (from [LogTest.java](https://github.com/blacklocus/json-encoder/blob/master/json-encoder/src/test/java/com/blacklocus/logback/s3/LogTest.java))
 
 ```
 {"loggerName": "com.blacklocus.logback.s3.LogTest", "logLevel": "TRACE", "logDateTime": "2015-05-12T14:41:17.171Z", "lineNumber": 26, "rendered": "14:41:17.171 [main] TRACE com.blacklocus.logback.s3.LogTest - trace\n", "format": "trace", "args": [], "context": {"StartTime": "1431441677166"}}
